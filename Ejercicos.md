@@ -1,27 +1,7 @@
 # 🎵 Empresa discográfica
 
-Una empresa discográfica necesita modelar los datos sobre sus diferentes recursos según las siguientes características:
+### 📘 Ejercicio 1
 
----
+Una empresa discográfica necesita modelar los datos sobre sus diferentes recursos según las siguientes características: Manager: de cada mánager se almacena un identificador de manager y su nombre. Un manager representa a una serie de artistas. Artista: un artista es representado por un manager. De los artistas se almacena su nombre completo (usando un único atributo) y su NIF. Evento de promoción: los artistas participan en eventos de promoción para dar a conocer sus trabajos. En un evento de promoción pueden participar varios artistas. De un evento se almacena un identificador único, la fecha de celebración y el número de asistentes. Se pide: 1) Dibuje un diagrama E/R que modele la base de datos descrita, usando en conjunto de entidades para cada uno de los conceptos anteriores (es decir, su diseño debe tener 3 conjuntos de entidades).
 
-### 👨‍💼 Manager
-
-De cada mánager se almacena un identificador de manager y su nombre. Un manager representa a una serie de artistas.
-
-### 🎤 Artista
-
-Un artista es representado por un manager. De los artistas se almacena su nombre completo (usando un único atributo) y su NIF.
-
-### 🎟️ Evento de promoción
-
-Los artistas participan en eventos de promoción para dar a conocer sus trabajos. En un evento de promoción pueden participar varios artistas. De un evento se almacena un identificador único, la fecha de celebración y el número de asistentes.
-
----
-
-## 📝 Se pide:
-
-**1)** Dibuje un diagrama E/R que modele la base de datos descrita, usando en conjunto de entidades para cada uno de los conceptos anteriores (es decir, su diseño debe tener 3 conjuntos de entidades).
-
----
-
-📘 [Ejercicio 1](https://drive.google.com/file/d/1_AG_plTkJL4zF5rvBb94sh2WwyF9378O/view?usp=sharing)
+🔗 [Ver Ejercicio 1](https://drive.google.com/file/d/1_AG_plTkJL4zF5rvBb94sh2WwyF9378O/view?usp=sharing)
