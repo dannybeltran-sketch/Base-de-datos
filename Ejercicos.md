@@ -21,3 +21,7 @@ Los artistas participan en eventos de promoción para dar a conocer sus trabajos
 ## 📝 Se pide:
 
 **1)** Dibuje un diagrama E/R que modele la base de datos descrita, usando en conjunto de entidades para cada uno de los conceptos anteriores (es decir, su diseño debe tener 3 conjuntos de entidades).
+
+---
+
+📘 [Ejercicio 1](https://drive.google.com/file/d/1_AG_plTkJL4zF5rvBb94sh2WwyF9378O/view?usp=sharing)
