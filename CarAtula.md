@@ -9,16 +9,16 @@
 ---
 
 ### 📚 Asignatura
-**Programación Orientada a Objetos**
+**Base de Datos**
 
 ### 🏷 Unidad
-**Dos**
+**Uno**
 
 ### 📝 Tema
-**Resolución de ejercicios Poo**
+**Resolución de ejercicios**
 
 ### 👨‍🏫
-**ING. Wilman Chamba**
+**ING. René Guamán**
 
 ### 👨‍🎓 Estudiante
 **Danny Fernando Beltrán**
@@ -27,10 +27,10 @@
 **Computación**
 
 ### 🔢 Ciclo
-**Segundo Ciclo**
+**Tercer Ciclo**
 
 ### 📅 Período académico
-**Marzo-Agosto**
+**Septiembre-febrero**
 
 <div align="center">
 
