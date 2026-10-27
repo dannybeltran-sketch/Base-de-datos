@@ -56,6 +56,45 @@ Los clientes realizan pedidos que contienen varios platos con distinta cantidad.
 ## Modelo SQL
 
 ```
+create table Cliente (
+    id_cliente varchar(20) primary key,
+    nombre varchar(20),
+    telefono varchar(10)
+);
+
+create table Mesero (
+    id_mesero varchar(20) primary key,
+    nombre varchar(20) not null
+);
+
+create table Categoria (
+    id_categoria varchar(20) primary key,
+    nombre varchar(20) not null
+);
+
+create table Plato (
+    id_plato varchar(20) primary key,
+    nombre varchar(20) not null,
+    precio_actual double not null,
+    id_categoria varchar(20) not null,
+    foreign key (id_categoria) references Categoria(id_categoria)
+);
+
+create table Pedido (
+    id_pedido varchar(20) primary key,
+    id_cliente varchar(20) not null,
+    id_mesero varchar(20) not null,
+    foreign key (id_cliente) references Cliente(id_cliente),
+    foreign key (id_mesero) references Mesero(id_mesero)
+);
+
+create table Detalle_Pedido (
+    id_pedido varchar(20),
+    id_plato varchar(20),
+    primary key (id_pedido, id_plato),
+    foreign key (id_pedido) references Pedido(id_pedido),
+    foreign key (id_plato) references Plato(id_plato)
+);
 ```
 ---
 
@@ -68,6 +107,61 @@ Los pacientes solicitan citas; cada cita la atiende un médico a un paciente en 
 ## Modelo SQL
 
 ```
+create table Paciente (
+    id_paciente varchar(20) primary key,
+    cedula varchar(10) unique not null,
+    nombre varchar(20) not null
+);
+
+create table Especialidad (
+    id_especialidad varchar(20) primary key,
+    nombre varchar(20) not null
+);
+
+create table Medico (
+    id_medico varchar(20) primary key,
+    nombre varchar(20) not null,
+    id_especialidad varchar(20),
+    foreign key (id_especialidad) references Especialidad(id_especialidad)
+);
+
+create table Consultorio (
+    id_consultorio varchar(20) primary key,
+    numero int not null
+);
+
+create table Cita (
+    id_cita varchar(20) primary key,
+    fecha date not null,
+    hora time not null,
+    id_paciente varchar(20) not null,
+    id_medico varchar(20) not null,
+    id_consultorio varchar(20),
+    foreign key (id_paciente) references Paciente(id_paciente),
+    foreign key (id_medico) references Medico(id_medico),
+    foreign key (id_consultorio) references Consultorio(id_consultorio)
+);
+
+create table Medicamento (
+    id_medicamento varchar(20) primary key,
+    nombre varchar(20) not null
+);
+
+create table Receta (
+    id_receta varchar(20) primary key,
+    id_cita varchar(20) not null,
+    foreign key (id_cita) references Cita(id_cita)
+);
+
+create table Detalle_Receta (
+    id_receta varchar(20),
+    id_medicamento varchar(20) not null,
+    dosis varchar(100),
+    duracion varchar(100) not null,
+    primary key (id_receta, id_medicamento),
+    foreign key (id_receta) references Receta(id_receta),
+    foreign key (id_medicamento) references Medicamento(id_medicamento)
+);
 ```
 ---
 
@@ -80,6 +174,37 @@ Una aerolínea opera vuelos (cada uno con número, fecha, origen y destino), cad
 ## Modelo SQL
 
 ```
+create table Avion (
+    matricula varchar(10) primary key,
+    modelo varchar(60) not null,
+    capacidad int not null
+);
+
+create table Vuelo (
+    num_vuelo varchar(10) primary key,
+    fecha date not null,
+    origen varchar(60) not null,
+    destino varchar(60) not null,
+    matricula varchar(10) not null,
+    foreign key (matricula) references Avion(matricula)
+);
+
+create table Pasajero (
+    id_pasajero int auto_increment primary key,
+    documento varchar(20) unique not null,
+    nombre varchar(100) not null
+);
+
+create table Reserva (
+    id_reserva int auto_increment primary key,
+    asiento varchar(5) not null,
+    tarifa_pagada decimal(10,2) not null,
+    num_vuelo varchar(10) not null,
+    id_pasajero int not null,
+    unique (num_vuelo, asiento),
+    foreign key (num_vuelo) references Vuelo(num_vuelo),
+    foreign key (id_pasajero) references Pasajero(id_pasajero)
+);
 ```
 ---
 
@@ -96,6 +221,31 @@ Una empresa discográfica necesita modelar los datos sobre sus diferentes recurs
 ## Modelo SQL
 
 ```
+create table Manager (
+    id_manager int auto_increment primary key,
+    nombre varchar(100) not null
+);
+
+create table Artista (
+    nif varchar(9) primary key,
+    nombre_completo varchar(150) not null,
+    id_manager int not null,
+    foreign key (id_manager) references Manager(id_manager)
+);
+
+create table Evento_Promocion (
+    id_evento int auto_increment primary key,
+    fecha date not null,
+    num_asistentes int not null
+);
+
+create table Artista_Evento (
+    nif varchar(9) not null,
+    id_evento int not null,
+    primary key (nif, id_evento),
+    foreign key (nif) references Artista(nif),
+    foreign key (id_evento) references Evento_Promocion(id_evento)
+);
 ```
 ---
 
@@ -108,6 +258,46 @@ Se desea crear una aplicación para la gestión de una tienda informática. La t
 ## Modelo SQL
 
 ```
+create table Cliente (
+    cod_cliente int auto_increment primary key,
+    nombre varchar(60) not null,
+    apellidos varchar(60) not null,
+    direccion varchar(150) not null,
+    telefono varchar(15) not null
+);
+
+create table Producto (
+    cod_producto int auto_increment primary key,
+    descripcion varchar(150) not null,
+    precio decimal(10,2) not null,
+    existencias int not null
+);
+
+create table Proveedor (
+    cod_proveedor int auto_increment primary key,
+    nombres varchar(60) not null,
+    apellidos varchar(60) not null,
+    direccion varchar(150) not null,
+    provincia varchar(60) not null,
+    telefono varchar(15) not null
+);
+
+create table Compra (
+    cod_cliente int not null,
+    cod_producto int not null,
+    fecha date not null,
+    primary key (cod_cliente, cod_producto, fecha),
+    foreign key (cod_cliente) references Cliente(cod_cliente),
+    foreign key (cod_producto) references Producto(cod_producto)
+);
+
+create table Suministra (
+    cod_proveedor int not null,
+    cod_producto int not null,
+    primary key (cod_proveedor, cod_producto),
+    foreign key (cod_proveedor) references Proveedor(cod_proveedor),
+    foreign key (cod_producto) references Producto(cod_producto)
+);
 ```
 ---
 
@@ -124,6 +314,41 @@ Se desea crear una aplicación para la gestión de una tienda informática. La t
 ## Modelo SQL
 
 ```
+create table Genero_Musical (
+    id_genero int auto_increment primary key,
+    nombre varchar(60) unique not null
+);
+
+create table Cantante (
+    id_cantante int auto_increment primary key,
+    nombre varchar(100) not null,
+    pais varchar(60) not null
+);
+
+create table Disco (
+    id_disco int auto_increment primary key,
+    titulo varchar(150) not null,
+    precio decimal(10,2) not null,
+    id_genero int not null,
+    id_cantante int not null,
+    foreign key (id_genero) references Genero_Musical(id_genero),
+    foreign key (id_cantante) references Cantante(id_cantante)
+);
+
+create table Cancion (
+    id_cancion int auto_increment primary key,
+    titulo varchar(150) not null
+);
+
+create table Disco_Cancion (
+    id_disco int not null,
+    id_cancion int not null,
+    posicion int not null,
+    primary key (id_disco, id_cancion),
+    unique (id_disco, posicion),
+    foreign key (id_disco) references Disco(id_disco),
+    foreign key (id_cancion) references Cancion(id_cancion)
+);
 ```
 ---
 
@@ -140,6 +365,47 @@ De los camiones que llevan los camioneros, interesa conocer la matrícula, model
 ## Modelo SQL
 
 ```
+create table Camionero (
+    cedula varchar(10) primary key,
+    nombre varchar(100) not null,
+    telefono varchar(15) not null,
+    direccion varchar(150) not null,
+    salario decimal(10,2) not null,
+    poblacion varchar(80) not null
+);
+
+create table Provincia (
+    cod_provincia int primary key,
+    nombre varchar(60) not null
+);
+
+create table Paquete (
+    cod_paquete int auto_increment primary key,
+    descripcion varchar(150) not null,
+    destinatario varchar(100) not null,
+    dir_destinatario varchar(150) not null,
+    cedula_camionero varchar(10) not null,
+    cod_provincia int not null,
+    foreign key (cedula_camionero) references Camionero(cedula),
+    foreign key (cod_provincia) references Provincia(cod_provincia)
+);
+
+create table Camion (
+    matricula varchar(10) primary key,
+    modelo varchar(60) not null,
+    tipo varchar(40) not null,
+    potencia int not null
+);
+
+create table Conduce (
+    cedula varchar(10) not null,
+    matricula varchar(10) not null,
+    fecha date not null,
+    primary key (cedula, matricula, fecha),
+    foreign key (cedula) references Camionero(cedula),
+    foreign key (matricula) references Camion(matricula)
+);
+
 ```
 ---
 
@@ -167,4 +433,64 @@ De los camiones que llevan los camioneros, interesa conocer la matrícula, model
 ## Modelo SQL
 
 ```
+create table Propietario (
+    cedula varchar(10) primary key,
+    apellidos varchar(80) not null,
+    nombres varchar(80) not null,
+    direccion varchar(150) not null
+);
+
+create table Telefono_Propietario (
+    cedula varchar(10) not null,
+    telefono varchar(15) not null,
+    primary key (cedula, telefono),
+    foreign key (cedula) references Propietario(cedula)
+);
+
+create table Familiar (
+    cedula_propietario varchar(10) not null,
+    cedula varchar(10) unique not null,
+    nombre varchar(100) not null,
+    telefono varchar(15) not null,
+    primary key (cedula_propietario, cedula),
+    foreign key (cedula_propietario) references Propietario(cedula)
+);
+
+create table Mascota (
+    id_mascota int auto_increment primary key,
+    nombre varchar(60) not null,
+    fecha_nacimiento date not null,
+    tipo varchar(40) not null,
+    cedula_propietario varchar(10) not null,
+    foreign key (cedula_propietario) references Propietario(cedula)
+);
+
+create table Personal (
+    codigo varchar(10) primary key,
+    cedula varchar(10) not null,
+    nombre varchar(100) not null
+);
+
+create table Veterinario (
+    codigo varchar(10) primary key,
+    fecha_alta date not null,
+    especialidad varchar(80) not null,
+    foreign key (codigo) references Personal(codigo)
+);
+
+create table Auxiliar (
+    codigo varchar(10) primary key,
+    base_cotizacion decimal(10,2) not null,
+    foreign key (codigo) references Personal(codigo)
+);
+
+create table Consulta (
+    id_consulta int auto_increment primary key,
+    fecha date not null,
+    diagnostico text not null,
+    id_mascota int not null,
+    codigo_veterinario varchar(10) not null,
+    foreign key (id_mascota) references Mascota(id_mascota),
+    foreign key (codigo_veterinario) references Veterinario(codigo)
+);
 ```
